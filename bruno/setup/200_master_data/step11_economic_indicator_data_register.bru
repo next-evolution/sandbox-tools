@@ -1,0 +1,35 @@
+meta {
+  name: Step08 経済指標データ登録 (POST /api/v1/fx/economic-indicator-data)
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/economic-indicator-data
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "data": {
+      "code": "{{code}}",
+      "countryCode": "{{countryCode}}",
+      "publication": "{{publication}}",
+      "subTitle": "{{subTitle}}",
+      "resultValue": "{{resultValue}}",
+      "forecastValue": "{{forecastValue}}",
+      "previousValue": "{{previousValue}}",
+      "memo": "{{memo}}"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

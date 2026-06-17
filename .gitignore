@@ -1,0 +1,16 @@
+# Bruno 環境設定（実際の接続情報）
+bruno/environments/local.bru
+
+# Docker 環境変数（実際の値）
+docker/.env.compose
+
+# Docker ボリュームマウント
+local/*
+!local/work/
+
+# data: セキュリティ情報を含む CSV は除外（*.csv.example のみ管理対象）
+data/admin_user.csv
+data/user.csv
+
+# ワーク内の一時ファイル
+local/work/*

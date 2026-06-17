@@ -1,0 +1,21 @@
+meta {
+  name: Step07 ユーザー承認 (PUT /api/v1/admin/users/approved/{userId})
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/admin/users/approved/{{userIdEncoded}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminIdToken}}
+  Content-Type: application/json
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

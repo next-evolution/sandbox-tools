@@ -1,0 +1,42 @@
+meta {
+  name: Step04 Cognito ログイン（管理者）
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://cognito-idp.{{cognitoRegion}}.amazonaws.com/
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/x-amz-json-1.1
+  X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth
+}
+
+body:json {
+  {
+    "AuthFlow": "USER_PASSWORD_AUTH",
+    "ClientId": "{{cognitoClientId}}",
+    "AuthParameters": {
+      "USERNAME": "{{adminEmail}}",
+      "PASSWORD": "{{adminPassword}}"
+    }
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  const adminIdToken = data.AuthenticationResult && data.AuthenticationResult.IdToken;
+  if (adminIdToken) {
+    bru.setEnvVar("adminIdToken", adminIdToken);
+    const adminEmailEncoded = Buffer.from(bru.getEnvVar("adminEmail")).toString("base64");
+    bru.setEnvVar("adminEmailEncoded", adminEmailEncoded);
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.AuthenticationResult.IdToken: isDefined
+}

@@ -1,0 +1,41 @@
+meta {
+  name: Step06 ユーザー検索 (POST /api/v1/admin/users)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/admin/users
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminIdToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "emailAddress": "{{email}}",
+    "approved": false,
+    "page": 1,
+    "size": 10
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  const users = data.data && data.data.users;
+  if (users && users.length > 0) {
+    const userId = users[0].userId;
+    bru.setEnvVar("userId", userId);
+    const userIdEncoded = Buffer.from(userId).toString("base64");
+    bru.setEnvVar("userIdEncoded", userIdEncoded);
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

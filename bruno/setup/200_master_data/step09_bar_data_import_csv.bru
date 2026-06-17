@@ -1,0 +1,23 @@
+meta {
+  name: Step09 バーデータ CSV インポート (POST /api/v1/fx/bar-data/import-csv/{symbol}/{barType}/{skipLatest})
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/bar-data/import-csv/{{symbol}}/{{barType}}/false
+  body: multipart-form
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+}
+
+body:multipart-form {
+  uploadFile: @file({{filePath}})
+}
+
+assert {
+  res.status: eq 200
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Step02 Sandbox API 初回ログイン（returnCode:1 Warn 期待）
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{emailEncoded}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 1
+}

@@ -1,0 +1,23 @@
+"symbol","symbol_type","name",valid_scale,target_volatility,sort_order
+"USDJPY","Trade","ドル円",3,0.5,100
+"EURJPY","Trade","ユーロ円",3,0.5,200
+"EURUSD","Trade","ユーロドル",5,0.005,210
+"GBPJPY","Trade","ボンド円",3,0.5,300
+"GBPUSD","Trade","ポンドドル",5,0.005,310
+"AUDJPY","Trade","豪ドル円",3,0.5,400
+"AUDUSD","Trade","豪ドルドル",5,0.005,410
+"NZDJPY","Trade","キウイ円",3,0.5,500
+"NZDUSD","Trade","キウイドル",5,0.005,510
+"CADJPY","Trade","カナダドル円",3,0.5,600
+"USDCAD","Trade","ドルカナダ",5,0.005,610
+"CHFJPY","Trade","スイスフラン円",3,0.5,700
+"USDCHF","Trade","スイスフランドル",5,0.005,710
+"EURGBP","Trade","ユーロポンド",5,0.005,800
+"DXY","Analyze","US Dollar currency index",3,0.5,1000
+"JXY","Analyze","JP Yen currency index",3,0.5,1100
+"EXY","Analyze","Euro currency index",3,0.5,1200
+"BXY","Analyze","British currency index",3,0.5,1300
+"AXY","Analyze","Australia currency index",3,0.5,1400
+"ZXY","Analyze","New Zealand currency index",3,0.5,1500
+"CXY","Analyze","Canadian Dollar Currency Index",3,0.5,1600
+"SXY","Analyze","Swiss Franc Currency Index",3,0.5,1700

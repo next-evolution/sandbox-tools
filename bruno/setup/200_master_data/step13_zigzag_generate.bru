@@ -1,0 +1,30 @@
+meta {
+  name: Step11 ZigZag 生成 (POST /api/v1/fx/zigzag/generate)
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/zigzag/generate
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "symbol": "{{symbol}}",
+    "barType": "{{barType}}",
+    "depth": {{depth}},
+    "barDateTime": "{{barDateTime}}",
+    "loadSize": {{loadSize}}
+  }
+}
+
+assert {
+  res.status: eq 200
+}

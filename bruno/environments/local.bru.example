@@ -1,0 +1,22 @@
+vars {
+  apiScheme: http
+  apiHost: localhost
+  apiPort: 8080
+  apiRoot: /api/v1
+  cognitoRegion: ap-northeast-1
+  cognitoClientId: ididididididididididid
+  email: user01@xxxx.yy.zz
+  password: pwdpwdpwd
+  nickName: User01
+  adminEmail: admin@xxxx.yy.zz
+  adminPassword: pwdpwdpwd
+  idToken:
+  adminIdToken:
+  emailEncoded:
+  adminEmailEncoded:
+  userId:
+  userIdEncoded:
+}
+
+vars:secret [
+]

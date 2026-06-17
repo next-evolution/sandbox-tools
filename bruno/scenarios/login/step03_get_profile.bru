@@ -1,0 +1,20 @@
+meta {
+  name: Step03 プロフィール取得 (GET /api/v1/user)
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/user
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}
