@@ -1,0 +1,27 @@
+meta {
+  name: Step05 Sandbox API ログイン（管理者）
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminIdToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{adminEmailEncoded}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

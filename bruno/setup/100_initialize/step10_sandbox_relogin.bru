@@ -1,0 +1,27 @@
+meta {
+  name: Step10 Sandbox API 再ログイン（returnCode:0 Ok 期待）
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "{{emailEncoded}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

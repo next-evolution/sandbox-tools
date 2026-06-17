@@ -1,0 +1,27 @@
+meta {
+  name: Step08 管理者権限付与 (PUT /api/v1/admin/users/admin/{userId})
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/admin/users/admin/{{userIdEncoded}}
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminIdToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "admin": true
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

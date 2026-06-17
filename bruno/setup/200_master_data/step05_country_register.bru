@@ -1,0 +1,33 @@
+meta {
+  name: Step05 国登録 (POST /api/v1/fx/country)
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/country
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "country": {
+      "code": "{{code}}",
+      "name": "{{name}}",
+      "currencyCode": "{{currencyCode}}",
+      "nameEn": "{{nameEn}}",
+      "nameShort": "{{nameShort}}",
+      "sortOrder": {{sortOrder}}
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

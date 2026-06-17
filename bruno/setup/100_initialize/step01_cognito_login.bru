@@ -1,0 +1,42 @@
+meta {
+  name: Step01 Cognito ログイン（一般ユーザー）
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://cognito-idp.{{cognitoRegion}}.amazonaws.com/
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/x-amz-json-1.1
+  X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth
+}
+
+body:json {
+  {
+    "AuthFlow": "USER_PASSWORD_AUTH",
+    "ClientId": "{{cognitoClientId}}",
+    "AuthParameters": {
+      "USERNAME": "{{email}}",
+      "PASSWORD": "{{password}}"
+    }
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  const idToken = data.AuthenticationResult && data.AuthenticationResult.IdToken;
+  if (idToken) {
+    bru.setEnvVar("idToken", idToken);
+    const emailEncoded = Buffer.from(bru.getEnvVar("email")).toString("base64");
+    bru.setEnvVar("emailEncoded", emailEncoded);
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.AuthenticationResult.IdToken: isDefined
+}

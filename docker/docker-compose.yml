@@ -1,0 +1,40 @@
+services:
+  db:
+    # platform: linux/arm64/v8
+    container_name: sandbox-db
+    hostname: sandbox-db
+    image: mysql:8.4.7
+    command: mysqld
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_SCHEMA}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_UUID: ${ADMIN_UUID}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      TZ: Asia/Tokyo
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./mysql/50-server.cnf:/etc/my.cnf.d/50-server.cnf
+      - ./mysql/initdb.d/:/docker-entrypoint-initdb.d
+      - ../local/work:/work
+      - mysql:/var/lib/mysql
+    working_dir: /work
+  redis:
+    # platform: linux/arm64/v8
+    container_name: sandbox-redis
+    hostname: sandbox-redis
+    image: redis:8.0.0-alpine
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ../local/work:/work
+      - redis:/data
+volumes:
+  mysql:
+  redis:

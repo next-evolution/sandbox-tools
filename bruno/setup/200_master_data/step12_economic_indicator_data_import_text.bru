@@ -1,0 +1,24 @@
+meta {
+  name: Step10 経済指標データ テキストインポート (POST /api/v1/fx/economic-indicator-data/import-text)
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/economic-indicator-data/import-text
+  body: multipart-form
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+}
+
+body:multipart-form {
+  uploadFileList: @file(../../../data/2026_03_H.txt)
+  uploadFileList: @file(../../../data/2026_03_M.txt)
+}
+
+assert {
+  res.status: eq 200
+}

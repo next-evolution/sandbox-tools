@@ -1,0 +1,30 @@
+meta {
+  name: Step06 サマータイム登録 (POST /api/v1/fx/summer-time)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/fx/summer-time
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "summerTime": {
+      "targetYear": {{targetYear}},
+      "applyStart": "{{applyStart}}",
+      "applyEnd": "{{applyEnd}}"
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

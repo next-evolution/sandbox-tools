@@ -1,0 +1,10 @@
+"code","name","currency_code","name_en","name_short",sort_order
+"US","アメリカ合衆国","USD","United States","米国",100
+"JP","日本","JPY","Japan","日本",200
+"EU","ユーロ圏","EUR","Euro Area","ユーロ",300
+"GB","イギリス","GBP","United Kingdom","英国",400
+"AU","オーストラリア","AUD","Australia","豪州",500
+"NZ","ニュージーランド","NZD","New Zealand","NZ",600
+"CA","カナダ","CAD","Canada","カナダ",700
+"CH","スイス","CHF","Switzerland","スイス",800
+"FR","フランス","FRA","France","フランス",900

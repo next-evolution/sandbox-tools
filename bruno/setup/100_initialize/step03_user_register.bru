@@ -1,0 +1,27 @@
+meta {
+  name: Step03 ユーザー登録 (POST /api/v1/user)
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/user
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{idToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nickName": "{{nickName}}"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}
