@@ -1,10 +1,21 @@
 "code","name","currency_code","name_en","name_short",sort_order
-"US","アメリカ合衆国","USD","United States","米国",100
-"JP","日本","JPY","Japan","日本",200
-"EU","ユーロ圏","EUR","Euro Area","ユーロ",300
-"GB","イギリス","GBP","United Kingdom","英国",400
-"AU","オーストラリア","AUD","Australia","豪州",500
-"NZ","ニュージーランド","NZD","New Zealand","NZ",600
-"CA","カナダ","CAD","Canada","カナダ",700
-"CH","スイス","CHF","Switzerland","スイス",800
-"FR","フランス","FRA","France","フランス",900
+"AU","オーストラリア","AUD","Australia","豪",140
+"BR","ブラジル","BRL","Federative Republic of Brazil","BR",570
+"CA","カナダ","CAD","Canada","加",160
+"CH","スイス","CHF","Swiss Confederation","CH",520
+"CN","中国","CNY","People\"s Republic of China","中",620
+"DE","ドイツ","EUR","Federal Republic of Germany","独",540
+"EU","ユーロ","EUR","European Union","EU",120
+"FR","フランス","EUR","French Republic","仏",580
+"GB","イギリス","GBP","United Kingdom","英",130
+"HK","香港","HKD","Hong Kong","港",610
+"IN","インド","INR","India","印",500
+"JP","日本","JPY","Japan","日",100
+"MX","メキシコ","MXN","United Mexican States","MX",590
+"NO","ノルウェー","NOK","Kingdom of Norway","NO",560
+"NZ","ニュージーランド","NZD","New Zealand","NZ",150
+"RU","ロシア","RUB","Russian Federation","露",600
+"SE","スウェーデン","SEK","Kingdom of Sweden","SE",530
+"SG","シンガポール","SGD","Republic of Singapore","SG",510
+"TR","トルコ","TRY","Republic of Turkey","土",550
+"US","アメリカ","USD","United States of America","米",110
