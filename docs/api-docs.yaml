@@ -1,0 +1,2469 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080/api
+  description: Generated server url
+paths:
+  /v1/user/{userId}:
+    put:
+      tags:
+      - user-controller
+      operationId: update
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /v1/fx/symbol/{symbol}:
+    get:
+      tags:
+      - symbol-controller
+      operationId: get
+      parameters:
+      - name: symbol
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SymbolDto"
+    put:
+      tags:
+      - symbol-controller
+      operationId: update_1
+      parameters:
+      - name: symbol
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SymbolRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/summer-time/{targetYear}:
+    get:
+      tags:
+      - summer-time-controller
+      operationId: get_1
+      parameters:
+      - name: targetYear
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SummerTimeDto"
+    put:
+      tags:
+      - summer-time-controller
+      operationId: update_2
+      parameters:
+      - name: targetYear
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SummerTimeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/economic-indicator/{countryCode}/{code}:
+    get:
+      tags:
+      - economic-indicator-controller
+      operationId: get_2
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EconomicIndicatorDto"
+    put:
+      tags:
+      - economic-indicator-controller
+      operationId: update_3
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/economic-indicator-data/{countryCode}/{code}/{publication}:
+    get:
+      tags:
+      - economic-indicator-data-controller
+      operationId: get_3
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: publication
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date-time
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EconomicIndicatorDataDto"
+    put:
+      tags:
+      - economic-indicator-data-controller
+      operationId: update_4
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: publication
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/country/{code}:
+    get:
+      tags:
+      - country-controller
+      operationId: get_4
+      parameters:
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountryDto"
+    put:
+      tags:
+      - country-controller
+      operationId: update_5
+      parameters:
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CountryRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/admin/users/block/{userId}:
+    put:
+      tags:
+      - users-controller
+      operationId: block
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserBlockRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /v1/admin/users/approved/{userId}:
+    put:
+      tags:
+      - users-controller
+      operationId: approved
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /v1/admin/users/admin/{userId}:
+    put:
+      tags:
+      - users-controller
+      operationId: grantAdmin
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAdminRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /v1/admin/master-refresh:
+    get:
+      tags:
+      - master-refresh-controller
+      operationId: status
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+    put:
+      tags:
+      - master-refresh-controller
+      operationId: refresh
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /v1/user:
+    get:
+      tags:
+      - user-controller
+      operationId: profile
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+    post:
+      tags:
+      - user-controller
+      operationId: registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /v1/fx/zigzag:
+    post:
+      tags:
+      - zig-zag-controller
+      operationId: search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZigZagSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZigZagSearchResponse"
+  /v1/fx/zigzag/status:
+    post:
+      tags:
+      - zig-zag-controller
+      operationId: status_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZigZagStatusRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZigZagStatusResponse"
+  /v1/fx/zigzag/generate:
+    post:
+      tags:
+      - zig-zag-controller
+      operationId: generate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZigZagGenerateRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZigZagGenerateResponse"
+  /v1/fx/zigzag/bar-data:
+    post:
+      tags:
+      - zig-zag-controller
+      operationId: barData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ZigZagBarDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ZigZagBarDataResponse"
+  /v1/fx/trade/simulation:
+    post:
+      tags:
+      - trade-simulation-controller
+      operationId: simulation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TradeSimulationRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradeSimulationResponse"
+  /v1/fx/symbol:
+    post:
+      tags:
+      - symbol-controller
+      operationId: add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SymbolRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/symbol/search:
+    post:
+      tags:
+      - symbol-controller
+      operationId: search_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SymbolSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SymbolSearchResponse"
+  /v1/fx/summer-time:
+    post:
+      tags:
+      - summer-time-controller
+      operationId: add_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SummerTimeRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/summer-time/search:
+    post:
+      tags:
+      - summer-time-controller
+      operationId: search_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SummerTimeSearchResponse"
+  /v1/fx/economic-indicator:
+    post:
+      tags:
+      - economic-indicator-controller
+      operationId: add_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/economic-indicator/search:
+    post:
+      tags:
+      - economic-indicator-controller
+      operationId: search_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EconomicIndicatorSearchResponse"
+  /v1/fx/economic-indicator-data:
+    post:
+      tags:
+      - economic-indicator-data-controller
+      operationId: add_3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorDataRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/economic-indicator-data/search:
+    post:
+      tags:
+      - economic-indicator-data-controller
+      operationId: search_4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EconomicIndicatorDataSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EconomicIndicatorDataSearchResponse"
+  /v1/fx/economic-indicator-data/import-text:
+    post:
+      tags:
+      - economic-indicator-data-controller
+      operationId: importText
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uploadFileList:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+              - uploadFileList
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FileImportResult"
+  /v1/fx/country:
+    post:
+      tags:
+      - country-controller
+      operationId: add_4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CountryRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+  /v1/fx/country/search:
+    post:
+      tags:
+      - country-controller
+      operationId: search_5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApiSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountrySearchResponse"
+  /v1/fx/bar-data:
+    post:
+      tags:
+      - bar-data-controller
+      operationId: search_6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BarDataSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BarDataSearchResponse"
+  /v1/fx/bar-data/import-csv/{symbol}/{barType}/{skipLatest}:
+    post:
+      tags:
+      - bar-data-controller
+      operationId: importCsv
+      parameters:
+      - name: symbol
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: barType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: skipLatest
+        in: path
+        required: true
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uploadFile:
+                  type: string
+                  format: binary
+              required:
+              - uploadFile
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BarDataImportResult"
+  /v1/auth/logout-api:
+    post:
+      tags:
+      - auth-controller
+      operationId: logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LogoutRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /v1/auth/login:
+    post:
+      tags:
+      - auth-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /v1/admin/users:
+    post:
+      tags:
+      - users-controller
+      operationId: search_7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserSearchRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserSearchResponse"
+  /v1/fx/symbol/currency-pair-list:
+    get:
+      tags:
+      - symbol-controller
+      operationId: currencyPairList
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SymbolDto"
+  /v1/fx/symbol/currency-index-list:
+    get:
+      tags:
+      - symbol-controller
+      operationId: currencyIndexList
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SymbolDto"
+  /v1/fx/master-list/symbol/{symbolType}:
+    get:
+      tags:
+      - master-list-controller
+      operationId: symbol
+      parameters:
+      - name: symbolType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KeyValue"
+  /v1/fx/master-list/economic-indicator/{countryCode}:
+    get:
+      tags:
+      - master-list-controller
+      operationId: economicIndicator
+      parameters:
+      - name: countryCode
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KeyValue"
+  /v1/fx/master-list/currency-pair:
+    get:
+      tags:
+      - master-list-controller
+      operationId: currencyPair
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KeyValue"
+  /v1/fx/master-list/currency-index:
+    get:
+      tags:
+      - master-list-controller
+      operationId: currencyIndex
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KeyValue"
+  /v1/fx/master-list/country:
+    get:
+      tags:
+      - master-list-controller
+      operationId: country
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/KeyValue"
+  /v1/fx/bar-data/{symbolType}/{barType}:
+    get:
+      tags:
+      - bar-data-controller
+      operationId: status_2
+      parameters:
+      - name: symbolType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: barType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BarDataImportResult"
+components:
+  schemas:
+    UserUpdateRequest:
+      type: object
+      properties:
+        nickName:
+          type: string
+          description: ニックネーム
+          example: Mr. Consideration
+          maxLength: 50
+          minLength: 0
+      required:
+      - nickName
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID(Number)
+          example: 999
+        userId:
+          type: string
+          description: ユーザID(Cognito sub)
+          example: 1aaaaaa1-2bb2-3cc3-4dd4-5eeeeeeeeee5
+        emailAddress:
+          type: string
+          description: email
+          example: account@domain.com
+        nickName:
+          type: string
+          description: nickname
+          example: Mr. Consideration
+        approved:
+          type: boolean
+          description: 承認フラグ
+        approvedAt:
+          type: string
+          format: date-time
+          description: 承認日時
+          example: 2026-01-23T12:34:56+09:00
+        admin:
+          type: boolean
+          description: 管理者フラグ
+        blocked:
+          type: boolean
+          description: auth0 blocked
+        createdAt:
+          type: string
+          format: date-time
+          description: 新規登録日時
+          example: 2026-01-23T12:34:56+09:00
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新日時
+          example: 2026-01-23T12:34:56+09:00
+      required:
+      - admin
+      - approved
+      - blocked
+      - createdAt
+      - emailAddress
+      - id
+      - nickName
+      - userId
+    UserResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        user:
+          $ref: "#/components/schemas/UserDto"
+          description: ユーザー情報
+      required:
+      - returnCode
+    SymbolDto:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: symbol
+          example: USDJPY
+        symbolType:
+          type: string
+          description: symbol
+          example: Trade|Analyze
+        name:
+          type: string
+          description: name
+          example: ドル円
+        validScale:
+          type: integer
+          format: int32
+          description: scale
+          example: 3
+        targetVolatility:
+          type: number
+          description: targetVolatility
+          example: 0.005
+        sortOrder:
+          type: integer
+          format: int32
+          description: sortOrder
+          example: 100
+      required:
+      - name
+      - sortOrder
+      - symbol
+      - symbolType
+      - targetVolatility
+      - validScale
+    SymbolRequest:
+      type: object
+      properties:
+        symbol:
+          $ref: "#/components/schemas/SymbolDto"
+      required:
+      - symbol
+    SummerTimeDto:
+      type: object
+      properties:
+        targetYear:
+          type: integer
+          format: int32
+          description: 対象年
+        applyStart:
+          type: string
+          format: date
+          description: 適用開始日
+          example: 2026-01-23
+        applyEnd:
+          type: string
+          format: date
+          description: 適用終了日
+          example: 2026-01-23
+      required:
+      - applyEnd
+      - applyStart
+      - targetYear
+    SummerTimeRequest:
+      type: object
+      properties:
+        summerTime:
+          $ref: "#/components/schemas/SummerTimeDto"
+      required:
+      - summerTime
+    EconomicIndicatorDto:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 経済指標コード
+          example: CPI_YOY
+        countryCode:
+          type: string
+          description: 国コード
+          example: JP
+        name:
+          type: string
+          description: 指標名
+        importance:
+          type: string
+          description: 重要度
+          enum:
+          - H
+          - M
+          - X
+          - Z
+        description:
+          type: string
+          description: 説明
+        unitOfValue:
+          type: string
+          description: 単位
+        countryName:
+          type: string
+          description: 国名
+        countryNameShort:
+          type: string
+          description: 国名略称
+      required:
+      - code
+      - countryCode
+      - importance
+      - name
+    EconomicIndicatorRequest:
+      type: object
+      properties:
+        indicator:
+          $ref: "#/components/schemas/EconomicIndicatorDto"
+      required:
+      - indicator
+    EconomicIndicatorDataDto:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 経済指標コード
+          example: CPI_YOY
+        countryCode:
+          type: string
+          description: 国コード
+          example: JP
+        name:
+          type: string
+          description: 指標名
+        importance:
+          type: string
+          description: 重要度
+        description:
+          type: string
+          description: 説明
+        publication:
+          type: string
+          format: date-time
+          description: 発表日時
+          example: 2026-01-23T12:34:56+09:00
+        publicationDate:
+          type: string
+          description: 発表日
+        publicationTime:
+          type: string
+          description: 発表時刻
+        dayOfWeek:
+          type: integer
+          format: int32
+          description: 曜日
+        subTitle:
+          type: string
+          description: サブタイトル
+        resultValue:
+          type: string
+          description: 実績値
+        forecastValue:
+          type: string
+          description: 予想値
+        previousValue:
+          type: string
+          description: 前回値
+        unitOfValue:
+          type: string
+          description: 単位
+        memo:
+          type: string
+          description: メモ
+        countryName:
+          type: string
+          description: 国名
+        countryNameShort:
+          type: string
+          description: 国名略称
+      required:
+      - code
+      - countryCode
+      - publication
+      - resultValue
+    EconomicIndicatorDataRequest:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/EconomicIndicatorDataDto"
+      required:
+      - data
+    CountryDto:
+      type: object
+      properties:
+        code:
+          type: string
+          description: ISO 3166-1 alpha-2
+        name:
+          type: string
+        currencyCode:
+          type: string
+        nameEn:
+          type: string
+        nameShort:
+          type: string
+        sortOrder:
+          type: integer
+          format: int32
+      required:
+      - code
+      - currencyCode
+      - name
+      - nameEn
+      - nameShort
+      - sortOrder
+    CountryRequest:
+      type: object
+      properties:
+        country:
+          $ref: "#/components/schemas/CountryDto"
+      required:
+      - country
+    UserBlockRequest:
+      type: object
+      properties:
+        blocked:
+          type: boolean
+          description: Block設定フラグ
+      required:
+      - blocked
+    UserAdminRequest:
+      type: object
+      properties:
+        admin:
+          type: boolean
+          description: 管理者権限フラグ
+      required:
+      - admin
+    ApiResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+      required:
+      - returnCode
+    UserRegistrationRequest:
+      type: object
+      properties:
+        nickName:
+          type: string
+          description: ニックネーム
+          example: Mr. Consideration
+          maxLength: 50
+          minLength: 0
+      required:
+      - nickName
+    ZigZagSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        barType:
+          type: string
+        symbol:
+          type: string
+          minLength: 1
+        depth:
+          type: integer
+          format: int32
+        barDateTimeMin:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        barDateTimeMax:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        wave:
+          type: integer
+          format: int32
+        previousWave:
+          type: integer
+          format: int32
+        nextWave:
+          type: integer
+          format: int32
+        next2Wave:
+          type: integer
+          format: int32
+        direction4h200:
+          type: integer
+          format: int32
+        direction4h75:
+          type: integer
+          format: int32
+        direction4h20:
+          type: integer
+          format: int32
+        direction1h200:
+          type: integer
+          format: int32
+        direction15m200:
+          type: integer
+          format: int32
+        wave4h:
+          type: integer
+          format: int32
+        directionTarget4h200:
+          type: integer
+          format: int32
+      required:
+      - barDateTimeMax
+      - barDateTimeMin
+      - barType
+      - depth
+      - page
+      - size
+      - symbol
+    Fibonacci:
+      type: object
+      properties:
+        f1:
+          type: number
+        f7:
+          type: number
+        f6:
+          type: number
+        f5:
+          type: number
+        f3:
+          type: number
+        f2:
+          type: number
+        f0:
+          type: number
+        priceRange:
+          type: number
+      required:
+      - f0
+      - f1
+      - f2
+      - f3
+      - f5
+      - f6
+      - f7
+      - priceRange
+    FractalWave:
+      type: object
+      properties:
+        waveStart:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        wave:
+          type: integer
+          format: int32
+      required:
+      - wave
+      - waveStart
+    Info:
+      type: object
+      properties:
+        waveStart:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        waveEnd:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        wave:
+          type: integer
+          format: int32
+        resistance:
+          type: number
+        support:
+          type: number
+      required:
+      - resistance
+      - support
+      - wave
+      - waveEnd
+      - waveStart
+    InfoSmaFibonacci:
+      type: object
+      properties:
+        waveStart:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        waveEnd:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        wave:
+          type: integer
+          format: int32
+        resistance:
+          type: number
+        support:
+          type: number
+        fibonacci:
+          $ref: "#/components/schemas/Fibonacci"
+        sma4h200s:
+          $ref: "#/components/schemas/Sma"
+        sma4h75s:
+          $ref: "#/components/schemas/Sma"
+        sma4h20s:
+          $ref: "#/components/schemas/Sma"
+        sma1h200s:
+          $ref: "#/components/schemas/Sma"
+        sma15m200s:
+          $ref: "#/components/schemas/Sma"
+      required:
+      - fibonacci
+      - resistance
+      - sma15m200s
+      - sma1h200s
+      - sma4h200s
+      - sma4h20s
+      - sma4h75s
+      - support
+      - wave
+      - waveEnd
+      - waveStart
+    Sma:
+      type: object
+      properties:
+        priceS:
+          type: number
+        priceE:
+          type: number
+        deviation:
+          type: number
+        fibonacci:
+          type: number
+        direction:
+          type: integer
+          format: int32
+        position:
+          type: integer
+          format: int32
+      required:
+      - deviation
+      - direction
+      - fibonacci
+      - position
+      - priceE
+      - priceS
+    ZigZagResult:
+      type: object
+      properties:
+        symbol:
+          type: string
+        depth:
+          type: integer
+          format: int32
+        target4h:
+          $ref: "#/components/schemas/InfoSmaFibonacci"
+        current:
+          $ref: "#/components/schemas/InfoSmaFibonacci"
+        previous:
+          $ref: "#/components/schemas/Info"
+        next:
+          $ref: "#/components/schemas/Info"
+        next2:
+          $ref: "#/components/schemas/Info"
+        nextRsRate:
+          type: number
+        next2MaxRate:
+          type: number
+        waveDxy4h:
+          type: number
+        waveDxy1h:
+          type: number
+        fractalWaveList:
+          type: array
+          items:
+            $ref: "#/components/schemas/FractalWave"
+      required:
+      - current
+      - depth
+      - fractalWaveList
+      - next
+      - next2
+      - next2MaxRate
+      - nextRsRate
+      - previous
+      - symbol
+      - target4h
+      - waveDxy1h
+      - waveDxy4h
+    ZigZagSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZigZagResult"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    ZigZagStatusRequest:
+      type: object
+      properties:
+        symbolType:
+          type: string
+          enum:
+          - Trade
+          - Analyze
+        barType:
+          type: string
+        depth:
+          type: integer
+          format: int32
+      required:
+      - barType
+      - depth
+      - symbolType
+    ZigZagStatusItem:
+      type: object
+      properties:
+        symbolType:
+          type: string
+          enum:
+          - Trade
+          - Analyze
+        barType:
+          type: string
+          enum:
+          - M15
+          - H1
+          - H4
+          - D1
+        symbol:
+          type: string
+        depth:
+          type: integer
+          format: int32
+        barDateTimeMin:
+          type: string
+        barDateTimeMax:
+          type: string
+        barCount:
+          type: integer
+          format: int32
+        barDateTimeMinZigZag:
+          type: string
+        barDateTimeMaxZigZag:
+          type: string
+        zigzagCount:
+          type: integer
+          format: int32
+        breakResistanceCount:
+          type: integer
+          format: int32
+        breakSupportCount:
+          type: integer
+          format: int32
+        message:
+          type: string
+      required:
+      - barCount
+      - barDateTimeMax
+      - barDateTimeMaxZigZag
+      - barDateTimeMin
+      - barDateTimeMinZigZag
+      - barType
+      - breakResistanceCount
+      - breakSupportCount
+      - depth
+      - symbol
+      - symbolType
+      - zigzagCount
+    ZigZagStatusResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZigZagStatusItem"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    ZigZagGenerateRequest:
+      type: object
+      properties:
+        symbol:
+          type: string
+          minLength: 1
+        barType:
+          type: string
+        depth:
+          type: integer
+          format: int32
+        barDateTime:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        loadSize:
+          type: integer
+          format: int32
+          description: 処理件数上限
+      required:
+      - barDateTime
+      - barType
+      - depth
+      - loadSize
+      - symbol
+    ZigZagGenerateResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        status:
+          $ref: "#/components/schemas/ZigZagStatusItem"
+      required:
+      - returnCode
+      - status
+    ZigZagBarDataRequest:
+      type: object
+      properties:
+        barType:
+          type: string
+          enum:
+          - M15
+          - H1
+          - H4
+          - D1
+        symbol:
+          type: string
+          minLength: 1
+        depth:
+          type: integer
+          format: int32
+        waveStart:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        wave:
+          type: integer
+          format: int32
+      required:
+      - barType
+      - depth
+      - symbol
+      - wave
+      - waveStart
+    ZigZagBarData:
+      type: object
+      properties:
+        barDateTime:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        openPrice:
+          type: number
+        highPrice:
+          type: number
+        lowPrice:
+          type: number
+        closePrice:
+          type: number
+        sma200:
+          type: number
+        sma75:
+          type: number
+        sma20:
+          type: number
+      required:
+      - barDateTime
+      - closePrice
+      - highPrice
+      - lowPrice
+      - openPrice
+      - sma20
+      - sma200
+      - sma75
+    ZigZagBarDataResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        barType:
+          type: string
+          enum:
+          - M15
+          - H1
+          - H4
+          - D1
+        symbol:
+          type: string
+        depth:
+          type: integer
+          format: int32
+        wave:
+          type: integer
+          format: int32
+        zigZagBarDataList:
+          type: array
+          items:
+            $ref: "#/components/schemas/ZigZagBarData"
+      required:
+      - barType
+      - depth
+      - returnCode
+      - symbol
+      - wave
+    EntryParam:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tradeVersion:
+          type: string
+          minLength: 1
+        entryType:
+          type: string
+          enum:
+          - F3
+          - FR
+          - F7
+          - UP
+          - DW
+        symbol:
+          type: string
+          pattern: "[A-Z][A-Z0-9]{2,6}"
+        tradeType:
+          type: string
+          enum:
+          - L
+          - S
+        contractAt:
+          type: string
+          format: date-time
+          example: 2026-01-23T12:34:56+09:00
+        fibonacciType:
+          type: string
+          minLength: 1
+        fibonacciBar:
+          type: string
+          minLength: 1
+        contractPrice:
+          type: number
+        lossPrice:
+          type: number
+        positionRatio:
+          type: integer
+          format: int32
+        priceJpy:
+          type: number
+        lot:
+          type: number
+        settlementAmount:
+          type: integer
+          format: int32
+        lossPips:
+          type: integer
+          format: int32
+        settlementRatio:
+          type: number
+        comment:
+          type: string
+        imagePath:
+          type: string
+      required:
+      - contractAt
+      - contractPrice
+      - entryType
+      - fibonacciBar
+      - fibonacciType
+      - lossPrice
+      - priceJpy
+      - symbol
+      - tradeType
+      - tradeVersion
+    PositionParam:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        positionNumber:
+          type: integer
+          format: int32
+        settlementPrice:
+          type: number
+        settlementPips:
+          type: integer
+          format: int32
+        settlementRatio:
+          type: number
+        lot:
+          type: number
+        profitAmount:
+          type: integer
+          format: int32
+        lossAmount:
+          type: integer
+          format: int32
+      required:
+      - positionNumber
+      - settlementPrice
+    TradeSimulationRequest:
+      type: object
+      properties:
+        riskAmount:
+          type: number
+        firstLotRatio:
+          type: number
+        entry:
+          $ref: "#/components/schemas/EntryParam"
+        positionList:
+          type: array
+          items:
+            $ref: "#/components/schemas/PositionParam"
+      required:
+      - entry
+      - firstLotRatio
+      - positionList
+      - riskAmount
+    TradeEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        tradeVersion:
+          type: string
+        entryType:
+          type: string
+          enum:
+          - F3
+          - FR
+          - F7
+          - UP
+          - DW
+        symbol:
+          type: string
+        tradeType:
+          type: string
+          enum:
+          - L
+          - S
+        contractAt:
+          type: string
+          format: date-time
+        fibonacciType:
+          type: string
+        fibonacciBar:
+          type: string
+        contractPrice:
+          type: number
+        lossPrice:
+          type: number
+        positionRatio:
+          type: integer
+          format: int32
+        priceJpy:
+          type: number
+        lot:
+          type: number
+        settlementAmount:
+          type: integer
+          format: int32
+        lossPips:
+          type: integer
+          format: int32
+        settlementRatio:
+          type: number
+        comment:
+          type: string
+        imagePath:
+          type: string
+        dollarCurrency:
+          type: boolean
+    TradePosition:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        positionNumber:
+          type: integer
+          format: int32
+        settlementPrice:
+          type: number
+        settlementPips:
+          type: integer
+          format: int32
+        settlementRatio:
+          type: number
+        lot:
+          type: number
+        profitAmount:
+          type: integer
+          format: int32
+        lossAmount:
+          type: integer
+          format: int32
+    TradeSimulationResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        entry:
+          $ref: "#/components/schemas/TradeEntry"
+        positionList:
+          type: array
+          items:
+            $ref: "#/components/schemas/TradePosition"
+      required:
+      - entry
+      - positionList
+      - returnCode
+    SymbolSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        symbolType:
+          type: string
+      required:
+      - page
+      - size
+      - symbolType
+    SymbolSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: SymbolList
+          items:
+            $ref: "#/components/schemas/SymbolDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    ApiSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+      required:
+      - page
+      - size
+    SummerTimeSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: summerTimeList
+          items:
+            $ref: "#/components/schemas/SummerTimeDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    EconomicIndicatorSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        countryCode:
+          type: string
+          description: 国コード
+          example: JP
+        importance:
+          type: string
+          description: 重要度
+          enum:
+          - ""
+          - H
+          - M
+          - X
+          - Z
+        name:
+          type: string
+          description: 指標名
+      required:
+      - page
+      - size
+    EconomicIndicatorSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: 経済指標マスタリスト
+          items:
+            $ref: "#/components/schemas/EconomicIndicatorDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    EconomicIndicatorDataSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        countryCode:
+          type: string
+          description: 国コード
+        importance:
+          type: string
+          description: 重要度
+        code:
+          type: string
+          description: 経済指標コード
+        sortAsc:
+          type: boolean
+          description: 昇順ソート
+        publicationBaseDate:
+          type: string
+          format: date
+          description: 発表日(基準日)
+          example: yyyy-MM-dd
+      required:
+      - page
+      - size
+    EconomicIndicatorDataSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: 経済指標データリスト
+          items:
+            $ref: "#/components/schemas/EconomicIndicatorDataDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    FileImportResult:
+      type: object
+      properties:
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        resultStatus:
+          type: string
+        readCount:
+          type: integer
+          format: int32
+        message:
+          type: string
+    CountrySearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: countryList
+          items:
+            $ref: "#/components/schemas/CountryDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    BarDataSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        barType:
+          type: string
+          description: barType
+          enum:
+          - M15
+          - H1
+          - H4
+          - D1
+        symbol:
+          type: string
+          description: symbol
+          minLength: 1
+          pattern: "[A-Z0-9]{3,6}|[A-Z]{3}"
+        barDateFrom:
+          type: string
+          description: barDateFrom
+          example: "20260123"
+          pattern: "(^$|[0-9]{8})"
+        barDateTo:
+          type: string
+          description: barDateTo
+          example: "20260123"
+          pattern: "(^$|[0-9]{8})"
+        sortAsc:
+          type: boolean
+          description: sort asc
+      required:
+      - barType
+      - page
+      - size
+      - symbol
+    BarData:
+      type: object
+      properties:
+        symbol:
+          type: string
+        barDateTime:
+          type: string
+          format: date-time
+        openPrice:
+          type: number
+        highPrice:
+          type: number
+        lowPrice:
+          type: number
+        closePrice:
+          type: number
+        volume:
+          type: integer
+          format: int32
+        highProfit:
+          type: number
+        lowProfit:
+          type: number
+        closeProfit:
+          type: number
+        rangeProfit:
+          type: number
+        rsiValue:
+          type: number
+        rsiMa:
+          type: number
+    BarDataSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: バーデータリスト
+          items:
+            $ref: "#/components/schemas/BarData"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    BarDataImportResult:
+      type: object
+      properties:
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          format: int64
+        resultStatus:
+          type: string
+        readCount:
+          type: integer
+          format: int32
+        message:
+          type: string
+        symbol:
+          type: string
+        barDateTime:
+          type: string
+        existsCount:
+          type: integer
+          format: int32
+        insertCount:
+          type: integer
+          format: int32
+        differenceCount:
+          type: integer
+          format: int32
+    LogoutRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: userId(BASE64 encode)
+          example: YWNjb3VudEBkb21haW4uY29t
+      required:
+      - userId
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: email(BASE64 encode)
+          example: YWNjb3VudEBkb21haW4uY29t
+      required:
+      - email
+    LoginResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        user:
+          $ref: "#/components/schemas/UserDto"
+      required:
+      - returnCode
+    UserSearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 1
+          minimum: 1
+        size:
+          type: integer
+          format: int32
+          example: 20
+          minimum: 1
+        emailAddress:
+          type: string
+          description: メールアドレス（部分一致）
+          example: account@domain.com
+        approved:
+          type: boolean
+          description: 承認フラグ
+      required:
+      - page
+      - size
+    UserSearchResponse:
+      type: object
+      properties:
+        returnCode:
+          type: integer
+          format: int32
+          description: 処理結果
+        message:
+          type: string
+          description: message
+        totalCount:
+          type: integer
+          format: int32
+          description: 総件数
+        searchCount:
+          type: integer
+          format: int32
+          description: 総件数
+        totalPage:
+          type: integer
+          format: int32
+          description: 総ページ
+        list:
+          type: array
+          description: ユーザーリスト
+          items:
+            $ref: "#/components/schemas/UserDto"
+      required:
+      - list
+      - returnCode
+      - searchCount
+      - totalCount
+      - totalPage
+    KeyValue:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
