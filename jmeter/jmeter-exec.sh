@@ -67,4 +67,5 @@ jmeter -n \
   -JAPI_CHARSET=${API_CHARSET} \
   -JCOGNITO_REGION=${COGNITO_REGION} \
   -JCOGNITO_CLIENT_ID=${COGNITO_CLIENT_ID} \
+  -JDEBUG_MODE=${DEBUG_MODE} \
   |tee -a ${outputDir}/jmeter-console.log
