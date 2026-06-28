@@ -20,3 +20,4 @@ jmeter/data/*.csv
 
 # ワーク内の一時ファイル
 local/work/*
+!local/work/backup_db.sh
