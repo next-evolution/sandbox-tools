@@ -62,7 +62,7 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="ユーザーデータ (user.csv)">
           <stringProp name="filename">data/login-user.csv</stringProp>
           <stringProp name="fileEncoding">UTF-8</stringProp>
-          <stringProp name="variableNames">email,password</stringProp>
+          <stringProp name="variableNames">email,password,nickName</stringProp>
           <stringProp name="delimiter">,</stringProp>
           <boolProp name="quotedData">true</boolProp>
           <boolProp name="ignoreFirstLine">true</boolProp>

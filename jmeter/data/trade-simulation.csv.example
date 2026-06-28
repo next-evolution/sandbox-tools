@@ -1,0 +1,4 @@
+riskAmount,firstLotRatio,tradeVersion,entryType,symbol,tradeType,contractAt,fibonacciType,fibonacciBar,contractPrice,lossPrice,priceJpy,positionNumber,settlementPrice
+10000,0.5,v1,F3,USDJPY,L,2026-01-15T09:00:00+09:00,F3,H4,155.000,153.500,155.0,1,156.500
+10000,0.5,v1,FR,EURJPY,S,2026-01-15T10:00:00+09:00,FR,H4,162.000,163.500,162.0,1,160.500
+10000,0.5,v1,F7,EURUSD,L,2026-02-01T09:00:00+09:00,F7,H4,1.0850,1.0750,1.0850,1,1.0950

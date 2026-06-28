@@ -68,4 +68,5 @@ jmeter -n \
   -JCOGNITO_REGION=${COGNITO_REGION} \
   -JCOGNITO_CLIENT_ID=${COGNITO_CLIENT_ID} \
   -JDEBUG_MODE=${DEBUG_MODE} \
+  -Jsample_variables=nickName \
   |tee -a ${outputDir}/jmeter-console.log

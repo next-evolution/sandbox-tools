@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sandbox データ検索 API テスト" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sandbox ZigZag ステータス API テスト" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
@@ -48,7 +48,7 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Sandbox データ検索 API シナリオ">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Sandbox ZigZag ステータス API シナリオ">
         <stringProp name="ThreadGroup.num_threads">${__P(threads,1)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(rampUp,1)}</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -189,15 +189,15 @@
           </RegexExtractor>
           <hashTree/>
         </hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="economic-indicator 検索ループ" enabled="true">
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="zigzag/status ループ" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </LoopController>
         <hashTree>
-          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="検索パラメーター (ec-data-search.csv)">
-            <stringProp name="filename">data/ec-data-search.csv</stringProp>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="検索パラメーター (zigzag-status.csv)">
+            <stringProp name="filename">data/zigzag-status.csv</stringProp>
             <stringProp name="fileEncoding">UTF-8</stringProp>
-            <stringProp name="variableNames">page,size,sortAsc,importance,countryCode,publicationBaseDate</stringProp>
+            <stringProp name="variableNames">symbolType,barType,depth</stringProp>
             <stringProp name="delimiter">,</stringProp>
             <boolProp name="quotedData">true</boolProp>
             <boolProp name="ignoreFirstLine">true</boolProp>
@@ -206,12 +206,12 @@
             <stringProp name="shareMode">shareMode.thread</stringProp>
           </CSVDataSet>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step3: economic-indicator/search (POST /v1/fx/economic-indicator/search)" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Step3: zigzag/status (POST /v1/fx/zigzag/status)" enabled="true">
             <stringProp name="HTTPSampler.domain">${API_HOST}</stringProp>
             <stringProp name="HTTPSampler.port">${API_PORT}</stringProp>
             <stringProp name="HTTPSampler.protocol">${API_SCHEME}</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">${API_CHARSET}</stringProp>
-            <stringProp name="HTTPSampler.path">${API_ROOT}/fx/economic-indicator/search</stringProp>
+            <stringProp name="HTTPSampler.path">${API_ROOT}/fx/zigzag/status</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -231,20 +231,16 @@
               <stringProp name="scriptLanguage">groovy</stringProp>
               <stringProp name="script">import groovy.json.JsonOutput
 
-def toStr(String v)  { (v == null || v.isEmpty()) ? null : v }
-def toInt(String v)  { (v == null || v.isEmpty()) ? null : v.toInteger() }
-def toBool(String v) { (v == null || v.isEmpty()) ? null : v.toBoolean() }
-
 def body = [
-    page               : toInt(vars.get("page")),
-    size               : toInt(vars.get("size")),
-    sortAsc            : toBool(vars.get("sortAsc")),
-    importance         : toStr(vars.get("importance")),
-    countryCode        : toStr(vars.get("countryCode")),
-    publicationBaseDate: toStr(vars.get("publicationBaseDate"))
+    symbolType: vars.get("symbolType"),
+    barType   : vars.get("barType"),
+    depth     : vars.get("depth").toInteger()
 ]
 
 vars.put("requestBody", JsonOutput.toJson(body))</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">false</stringProp>
             </JSR223PreProcessor>
             <hashTree/>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Bearer ヘッダー" enabled="true">
