@@ -1,5 +1,5 @@
 symbolType,barType,depth
-Trade,H4,3
-Trade,H1,3
-Trade,D1,3
-Analyze,H4,3
+Trade,4H,12
+Trade,1H,12
+Analyze,4H,12
+Analyze,1H,12
