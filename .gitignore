@@ -8,9 +8,16 @@ docker/.env.compose
 local/*
 !local/work/
 
+# JMeter 環境変数（実際の値）
+jmeter/jmeter.env
+jmeter/jmeter.log
+jmeter/result/*
+
 # data: セキュリティ情報を含む CSV は除外（*.csv.example のみ管理対象）
 data/admin_user.csv
 data/user.csv
+jmeter/data/*.csv
 
 # ワーク内の一時ファイル
 local/work/*
+!local/work/backup_db.sh
