@@ -35,8 +35,8 @@ docker compose --env-file .env.compose down
 
 | サービス | イメージ | コンテナ名 | 内部ポート | ホストポート |
 |---|---|---|---|---|
-| db | mysql:8.4.7 | sandbox-db | 3306 | `DB_PORT` |
-| redis | redis:8.0.0-alpine | sandbox-redis | 6379 | `REDIS_PORT` |
+| db | mysql:9.7.1 | sandbox-db | 3306 | `DB_PORT` |
+| redis | redis:8.8.0-alpine | sandbox-redis | 6379 | `REDIS_PORT` |
 
 共有ボリューム `../local/work` が `/work`（コンテナ内作業ディレクトリ）としてマウントされる。
 
