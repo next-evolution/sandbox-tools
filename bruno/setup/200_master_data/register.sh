@@ -2,11 +2,11 @@
 # ログイン後、CSV データを読み込んでマスターデータを一括登録する。
 #
 # 実行順序:
-#   [Step02-06] API でマスターデータ登録
+#   [Step02-05] API でマスターデータ登録
 #     symbol.csv → country.csv → summer_time.csv
-#   [Step07] CSV から直接 DB INSERT
+#   [Step06] CSV から直接 DB INSERT
 #     fx_economic_indicator
-#   [Step10] API でマスターデータ登録
+#   [Step07] API でマスターデータ登録
 #     economic_indicator
 #
 # バーデータ・ZigZag は setup/300_bar_data/register_bar-data.sh へ、
@@ -22,11 +22,11 @@
 #
 # --from-step N: ステップ N から再開する（省略時は 2 から全て実行）
 #   Step02: Sandbox API ログイン                           POST:/api/v1/auth/login
-#   Step04: シンボル登録                                   POST:/api/v1/fx/symbol
-#   Step05: 国登録                                         POST:/api/v1/fx/country
-#   Step06: サマータイム登録                               POST:/api/v1/fx/summer-time
-#   Step07: fx_economic_indicator データ投入               直接 DB INSERT
-#   Step10: 経済指標登録                                   POST:/api/v1/fx/economic-indicator
+#   Step03: シンボル登録                                   POST:/api/v1/fx/symbol
+#   Step04: 国登録                                         POST:/api/v1/fx/country
+#   Step05: サマータイム登録                               POST:/api/v1/fx/summer-time
+#   Step06: fx_economic_indicator データ投入               直接 DB INSERT
+#   Step07: 経済指標登録                                   POST:/api/v1/fx/economic-indicator
 #
 # ※ Cognito ログインはトークン取得のため --from-step に関わらず常に実行する
 
@@ -72,8 +72,8 @@ API_BASE="${API_SCHEME}://${API_HOST}:${API_PORT}${API_ROOT}"
 # N 以上のステップを実行する
 run_from() { [[ $1 -ge $FROM_STEP ]]; }
 
-# DB接続情報（Step07 で使用）
-if [[ $FROM_STEP -le 7 ]]; then
+# DB接続情報（Step06 で使用）
+if [[ $FROM_STEP -le 6 ]]; then
   ENV_COMPOSE="$(cd "$TOOL_DIR/../docker" && pwd)/.env.compose"
   if [[ ! -f "$ENV_COMPOSE" ]]; then
     echo "ERROR: .env.compose が見つかりません"
@@ -107,7 +107,7 @@ ID_TOKEN=$(echo "$COGNITO_RESPONSE" | python3 -c "import json,sys; print(json.lo
 EMAIL_ENCODED=$(printf '%s' "$EMAIL" | base64)
 echo "  idToken 取得済み"
 
-# ===== [Step02-06] API でマスターデータ登録 =====
+# ===== [Step02-05] API でマスターデータ登録 =====
 
 if run_from 2; then
   echo "=== [Step02] ログイン（Sandbox API） ==="
@@ -118,8 +118,8 @@ if run_from 2; then
   echo ""
 fi
 
-if run_from 4; then
-  echo "=== [Step04] シンボル登録 ==="
+if run_from 3; then
+  echo "=== [Step03] シンボル登録 ==="
   while IFS=',' read -r symbol symbol_type name valid_scale target_volatility sort_order; do
     symbol=$(echo "$symbol" | tr -d '"')
     symbol_type=$(echo "$symbol_type" | tr -d '"')
@@ -129,7 +129,7 @@ if run_from 4; then
     sort_order=$(echo "$sort_order" | tr -d '"')
 
     echo "  登録: $symbol ($name)"
-    bru run "setup/200_master_data/step04_symbol_register.bru" \
+    bru run "setup/200_master_data/step03_symbol_register.bru" \
       --env local \
       --env-var "idToken=$ID_TOKEN" \
       --env-var "symbol=$symbol" \
@@ -142,8 +142,8 @@ if run_from 4; then
   echo ""
 fi
 
-if run_from 5; then
-  echo "=== [Step05] 国登録 ==="
+if run_from 4; then
+  echo "=== [Step04] 国登録 ==="
   while IFS=',' read -r code name currency_code name_en name_short sort_order; do
     code=$(echo "$code" | tr -d '"')
     name=$(echo "$name" | tr -d '"')
@@ -153,7 +153,7 @@ if run_from 5; then
     sort_order=$(echo "$sort_order" | tr -d '"')
 
     echo "  登録: $code ($name)"
-    bru run "setup/200_master_data/step05_country_register.bru" \
+    bru run "setup/200_master_data/step04_country_register.bru" \
       --env local \
       --env-var "idToken=$ID_TOKEN" \
       --env-var "code=$code" \
@@ -166,15 +166,15 @@ if run_from 5; then
   echo ""
 fi
 
-if run_from 6; then
-  echo "=== [Step06] サマータイム登録 ==="
+if run_from 5; then
+  echo "=== [Step05] サマータイム登録 ==="
   while IFS=',' read -r target_year apply_start apply_end; do
     target_year=$(echo "$target_year" | tr -d '"')
     apply_start=$(echo "$apply_start" | tr -d '"')
     apply_end=$(echo "$apply_end" | tr -d '"')
 
     echo "  登録: $target_year ($apply_start 〜 $apply_end)"
-    bru run "setup/200_master_data/step06_summer_time_register.bru" \
+    bru run "setup/200_master_data/step05_summer_time_register.bru" \
       --env local \
       --env-var "idToken=$ID_TOKEN" \
       --env-var "targetYear=$target_year" \
@@ -184,10 +184,10 @@ if run_from 6; then
   echo ""
 fi
 
-# ===== [Step07] CSV から直接 DB INSERT =====
+# ===== [Step06] CSV から直接 DB INSERT =====
 
-if run_from 7; then
-  echo "=== [Step07] fx_economic_indicator データ投入 ==="
+if run_from 6; then
+  echo "=== [Step06] fx_economic_indicator データ投入 ==="
   EI_CSV="$DATA_DIR/economic_indicator-all.csv"
   if [[ ! -f "$EI_CSV" ]]; then
     echo "ERROR: $EI_CSV が見つかりません"
@@ -220,11 +220,11 @@ PYEOF
   echo ""
 fi
 
-# ===== [Step10] API でマスターデータ登録 =====
+# ===== [Step07] API でマスターデータ登録 =====
 
 # ※ country が先に登録されている必要がある
-if run_from 10; then
-  echo "=== [Step10] 経済指標登録 ==="
+if run_from 7; then
+  echo "=== [Step07] 経済指標登録 ==="
   while IFS=',' read -r code country_code importance name description unit_of_value; do
     code=$(echo "$code" | tr -d '"')
     country_code=$(echo "$country_code" | tr -d '"')
@@ -234,7 +234,7 @@ if run_from 10; then
     unit_of_value=$(echo "$unit_of_value" | tr -d '"')
 
     echo "  登録: $code / $country_code / $name"
-    bru run "setup/200_master_data/step10_economic_indicator_register.bru" \
+    bru run "setup/200_master_data/step07_economic_indicator_register.bru" \
       --env local \
       --env-var "idToken=$ID_TOKEN" \
       --env-var "code=$code" \
