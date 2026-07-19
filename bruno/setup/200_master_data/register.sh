@@ -4,15 +4,18 @@
 # 実行順序:
 #   [Step02-06] API でマスターデータ登録
 #     symbol.csv → country.csv → summer_time.csv
-#   [Step07-08] CSV から直接 DB INSERT / [Step09] API
-#     fx_economic_indicator → バーデータ → ZigZag
-#   [Step10-13] API でマスターデータ登録
-#     economic_indicator → economic_indicator_data → テキストインポート → ZigZag 生成
+#   [Step07] CSV から直接 DB INSERT
+#     fx_economic_indicator
+#   [Step10] API でマスターデータ登録
+#     economic_indicator
+#
+# バーデータ・ZigZag は setup/300_bar_data/register_bar-data.sh へ、
+# 経済指標データ（実績値）は setup/400_ec-data/register_ec-data.sh へ分離済み。
 #
 # 前提:
 #   - bru (Bruno CLI) がインストール済み: npm install -g @usebruno/cli
 #   - environments/local.bru が作成済み（email, password, cognitoClientId 等を設定）
-#   - tools/data/ 配下の CSV / バーデータ / テキストファイルが存在する
+#   - tools/data/ 配下の CSV ファイルが存在する
 #
 # 実行:
 #   ./setup/200_master_data/register.sh [--from-step N]
@@ -23,12 +26,7 @@
 #   Step05: 国登録                                         POST:/api/v1/fx/country
 #   Step06: サマータイム登録                               POST:/api/v1/fx/summer-time
 #   Step07: fx_economic_indicator データ投入               直接 DB INSERT
-#   Step08: ZigZag データ投入                              直接 DB INSERT
-#   Step09: バーデータ CSV インポート                      POST:/api/v1/fx/bar-data/import-csv/{symbol}/{barType}/{skipLatest}
 #   Step10: 経済指標登録                                   POST:/api/v1/fx/economic-indicator
-#   Step11: 経済指標データ登録                             POST:/api/v1/fx/economic-indicator-data
-#   Step12: 経済指標データ テキストインポート              POST:/api/v1/fx/economic-indicator-data/import-text
-#   Step13: ZigZag 生成                                    POST:/api/v1/fx/zigzag/generate
 #
 # ※ Cognito ログインはトークン取得のため --from-step に関わらず常に実行する
 
@@ -74,8 +72,8 @@ API_BASE="${API_SCHEME}://${API_HOST}:${API_PORT}${API_ROOT}"
 # N 以上のステップを実行する
 run_from() { [[ $1 -ge $FROM_STEP ]]; }
 
-# DB接続情報（Step07・Step08 で使用）
-if [[ $FROM_STEP -le 8 ]]; then
+# DB接続情報（Step07 で使用）
+if [[ $FROM_STEP -le 7 ]]; then
   ENV_COMPOSE="$(cd "$TOOL_DIR/../docker" && pwd)/.env.compose"
   if [[ ! -f "$ENV_COMPOSE" ]]; then
     echo "ERROR: .env.compose が見つかりません"
@@ -186,7 +184,7 @@ if run_from 6; then
   echo ""
 fi
 
-# ===== [Step07-08] CSV から直接 DB INSERT / [Step09] API =====
+# ===== [Step07] CSV から直接 DB INSERT =====
 
 if run_from 7; then
   echo "=== [Step07] fx_economic_indicator データ投入 ==="
@@ -222,87 +220,7 @@ PYEOF
   echo ""
 fi
 
-if run_from 8; then
-  echo "=== [Step08] ZigZag データ投入 ==="
-  ZIGZAG_DIR="$DATA_DIR/zigzag"
-  if [[ ! -d "$ZIGZAG_DIR" ]]; then
-    echo "ERROR: $ZIGZAG_DIR が見つかりません"
-    exit 1
-  fi
-
-  for csv_file in "$ZIGZAG_DIR"/*.csv; do
-    [[ -f "$csv_file" ]] || continue
-    table_name=$(basename "$csv_file" .csv)
-    echo "  投入: $table_name"
-
-    python3 - "$table_name" "$csv_file" <<'PYEOF' | mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_SCHEMA"
-import csv, sys
-
-BIT_COLS = {'up_trend', 'break_resistance', 'break_support'}
-DATETIME_COLS = {
-    'bar_date_time',
-    'resistance_bar_date_time', 'resistance_fractal_bar_date_time',
-    'support_bar_date_time', 'support_fractal_bar_date_time',
-    'high_bar_date_time', 'low_bar_date_time',
-    'backstep_high_bar_date_time', 'backstep_low_bar_date_time',
-    'wave_start', 'wave_end', 'previous_wave_start',
-}
-
-def to_val(col, raw):
-    if col in BIT_COLS:
-        return '1' if raw and raw not in ('\x00', '\\0') else '0'
-    if raw == '':
-        return 'NULL'
-    if col in DATETIME_COLS:
-        return f"'{raw}'"
-    return f"'{raw.replace(chr(39), chr(39)*2)}'"
-
-table, csv_path = sys.argv[1], sys.argv[2]
-with open(csv_path, newline='', encoding='utf-8') as f:
-    for row in csv.DictReader(f):
-        cols = list(row.keys())
-        vals = [to_val(col, row[col]) for col in cols]
-        print(f"INSERT IGNORE INTO {table} ({','.join(cols)}) VALUES ({','.join(vals)});")
-PYEOF
-
-    count=$(mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_SCHEMA" -sN \
-      -e "SELECT COUNT(*) FROM $table_name;")
-    echo "    完了: ${count} 件"
-  done
-  echo ""
-fi
-
-if run_from 9; then
-  echo "=== [Step09] バーデータ CSV インポート ==="
-  for dir_name in bar_15m bar_1h bar_4h bar_1d; do
-    bar_dir="$DATA_DIR/$dir_name"
-    case "$dir_name" in
-      bar_15m) bar_type="15M" ;;
-      bar_1h)  bar_type="1H"  ;;
-      bar_4h)  bar_type="4H"  ;;
-      bar_1d)  bar_type="1D"  ;;
-    esac
-
-    if [[ ! -d "$bar_dir" ]]; then
-      echo "  スキップ（ディレクトリなし）: $dir_name"
-      continue
-    fi
-
-    echo "--- $dir_name ($bar_type) ---"
-    for csv_file in "$bar_dir"/*.csv; do
-      [[ -f "$csv_file" ]] || continue
-      symbol=$(basename "$csv_file" | cut -d'_' -f2)
-      echo "  インポート: $symbol / $bar_type"
-      curl -sf -X POST \
-        -H "Authorization: Bearer $ID_TOKEN" \
-        -F "uploadFile=@$csv_file" \
-        "${API_BASE}/fx/bar-data/import-csv/${symbol}/${bar_type}/false" > /dev/null
-    done
-  done
-  echo ""
-fi
-
-# ===== [Step10-13] API でマスターデータ登録 =====
+# ===== [Step10] API でマスターデータ登録 =====
 
 # ※ country が先に登録されている必要がある
 if run_from 10; then
@@ -326,73 +244,6 @@ if run_from 10; then
       --env-var "description=$description" \
       --env-var "unitOfValue=$unit_of_value"
   done < <(tail -n +2 "$DATA_DIR/economic_indicator.csv")
-  echo ""
-fi
-
-# ※ economic_indicator.csv 登録後の実際の id（自動採番）を反映済みであること
-if run_from 11; then
-  echo "=== [Step11] 経済指標データ登録 ==="
-  while IFS=',' read -r code country_code publication sub_title result_value forecast_value previous_value memo; do
-    code=$(echo "$code" | tr -d '"')
-    country_code=$(echo "$country_code" | tr -d '"')
-    publication=$(echo "$publication" | tr -d '"')
-    sub_title=$(echo "$sub_title" | tr -d '"')
-    result_value=$(echo "$result_value" | tr -d '"')
-    forecast_value=$(echo "$forecast_value" | tr -d '"')
-    previous_value=$(echo "$previous_value" | tr -d '"')
-    memo=$(echo "$memo" | tr -d '"')
-
-    echo "  登録: $code / $country_code ($publication)"
-    bru run "setup/200_master_data/step11_economic_indicator_data_register.bru" \
-      --env local \
-      --env-var "idToken=$ID_TOKEN" \
-      --env-var "code=$code" \
-      --env-var "countryCode=$country_code" \
-      --env-var "publication=$publication" \
-      --env-var "subTitle=$sub_title" \
-      --env-var "resultValue=$result_value" \
-      --env-var "forecastValue=$forecast_value" \
-      --env-var "previousValue=$previous_value" \
-      --env-var "memo=$memo"
-  done < <(tail -n +2 "$DATA_DIR/economic_indicator_data.csv")
-  echo ""
-fi
-
-# uploadFileList は同一フィールド名で複数ファイルを送る必要があるため curl で直接実行
-if run_from 12; then
-  echo "=== [Step12] 経済指標データ テキストインポート ==="
-  curl -sf -X POST \
-    -H "Authorization: Bearer $ID_TOKEN" \
-    -F "uploadFileList=@$DATA_DIR/2026_03_H.txt" \
-    -F "uploadFileList=@$DATA_DIR/2026_03_M.txt" \
-    "${API_BASE}/fx/economic-indicator-data/import-text"
-  echo ""
-  echo ""
-fi
-
-if run_from 13; then
-  echo "=== [Step13] ZigZag 生成 ==="
-  ZIGZAG_BAR_TYPES=("15M" "1H" "4H" "1D")
-  ZIGZAG_DEPTH=3
-  ZIGZAG_BAR_DATE_TIME="2026-03-01T00:00:00+09:00"
-  ZIGZAG_LOAD_SIZE=1000
-
-  while IFS=',' read -r symbol symbol_type name valid_scale target_volatility sort_order; do
-    symbol=$(echo "$symbol" | tr -d '"')
-
-    for bar_type in "${ZIGZAG_BAR_TYPES[@]}"; do
-      echo "  生成: $symbol / $bar_type"
-      bru run "setup/200_master_data/step13_zigzag_generate.bru" \
-        --env local \
-        --env-var "idToken=$ID_TOKEN" \
-        --env-var "symbol=$symbol" \
-        --env-var "barType=$bar_type" \
-        --env-var "depth=$ZIGZAG_DEPTH" \
-        --env-var "barDateTime=$ZIGZAG_BAR_DATE_TIME" \
-        --env-var "loadSize=$ZIGZAG_LOAD_SIZE" \
-        || echo "    スキップ（バーデータ未登録の可能性）: $symbol / $bar_type"
-    done
-  done < <(tail -n +2 "$DATA_DIR/symbol.csv")
   echo ""
 fi
 
