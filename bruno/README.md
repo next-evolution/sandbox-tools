@@ -107,7 +107,7 @@ cd tools/bruno
 ./setup/200_master_data/register.sh
 
 # [2'] 任意ステップから再開
-./setup/200_master_data/register.sh --from-step 10
+./setup/200_master_data/register.sh --from-step 7
 
 # [3] バーデータ・ZigZag 登録（Step01 から全実行、Step02 完了後に実行すること）
 ./setup/300_bar_data/register_bar-data.sh
@@ -167,14 +167,14 @@ cd tools/bruno
 [Cognito]  Cognito ログイン（curl）← --from-step に関わらず常に実行
 
 [Step02]   Sandbox API ログイン                POST:/api/v1/auth/login
-[Step04]   シンボル登録                        POST:/api/v1/fx/symbol             ← symbol.csv をループ
-[Step05]   国登録                              POST:/api/v1/fx/country            ← country.csv をループ
-[Step06]   サマータイム登録                    POST:/api/v1/fx/summer-time        ← summer_time.csv をループ
-[Step07]   経済指標マスター投入                直接 DB INSERT                     ← economic_indicator-all.csv
-[Step10]   経済指標登録                        POST:/api/v1/fx/economic-indicator  ← economic_indicator.csv をループ
+[Step03]   シンボル登録                        POST:/api/v1/fx/symbol             ← symbol.csv をループ
+[Step04]   国登録                              POST:/api/v1/fx/country            ← country.csv をループ
+[Step05]   サマータイム登録                    POST:/api/v1/fx/summer-time        ← summer_time.csv をループ
+[Step06]   経済指標マスター投入                直接 DB INSERT                     ← economic_indicator-all.csv
+[Step07]   経済指標登録                        POST:/api/v1/fx/economic-indicator  ← economic_indicator.csv をループ
 ```
 
-- Step07 は API を経由せず `mysql` コマンドで直接 INSERT する
+- Step06 は API を経由せず `mysql` コマンドで直接 INSERT する
 
 ### --from-step N
 
@@ -182,17 +182,17 @@ cd tools/bruno
 
 ```bash
 # 経済指標マスター投入から再開
-./setup/200_master_data/register.sh --from-step 7
+./setup/200_master_data/register.sh --from-step 6
 
 # 経済指標登録のみ実行
-./setup/200_master_data/register.sh --from-step 10
+./setup/200_master_data/register.sh --from-step 7
 ```
 
 ---
 
 ## setup/300_bar_data フロー
 
-`register_bar-data.sh` が以下の順で実行する。**`200_master_data` の Step04（シンボル登録）完了が前提。**
+`register_bar-data.sh` が以下の順で実行する。**`200_master_data` の Step03（シンボル登録）完了が前提。**
 
 ```
 [Cognito]  Cognito ログイン（curl）← --from-step に関わらず常に実行
@@ -223,7 +223,7 @@ cd tools/bruno
 
 ## setup/400_ec-data フロー
 
-`register_ec-data.sh` が以下の順で実行する。**`200_master_data` の Step10（経済指標登録）完了が前提。**
+`register_ec-data.sh` が以下の順で実行する。**`200_master_data` の Step07（経済指標登録）完了が前提。**
 
 ```
 [Cognito]  Cognito ログイン（curl）← --from-step に関わらず常に実行
