@@ -44,7 +44,7 @@ mkdir -p ${BACKUP_DIR}/${BACKUP_SCHEMA}-${EXEC_DATE_TIME}
 for table in $TABLE_LIST
 do
   echo "----- ${table} -----"
-  mysqldump -uroot -ppassword --no-create-info ${BACKUP_SCHEMA} ${table} > ${BACKUP_DIR}/${BACKUP_SCHEMA}-${EXEC_DATE_TIME}/${table}.dmp
+  mysqldump -uroot -ppassword --set-gtid-purged=OFF --no-create-info ${BACKUP_SCHEMA} ${table} > ${BACKUP_DIR}/${BACKUP_SCHEMA}-${EXEC_DATE_TIME}/${table}.dmp
 done
 
 echo "backup to ${BACKUP_DIR}/${BACKUP_SCHEMA}-${EXEC_DATE_TIME}"
