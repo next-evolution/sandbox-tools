@@ -2,7 +2,7 @@
 bruno/environments/local.bru
 
 # Docker 環境変数（実際の値）
-docker/.env.compose
+docker/.env
 
 # Docker ボリュームマウント
 local/*
