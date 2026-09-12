@@ -41,6 +41,8 @@
 "GDP_Q_YOY","CN","H","四半期国内総生産(GDP)(前年同期比)","","％"
 "PMI_SVC_CAIXIN","CN","M","Caixinサービス部門購買担当者景気指数(PMI)","",""
 "PMI_MFG_CAIXIN","CN","M","Caixin製造業購買担当者景気指数(PMI)","",""
+"PMI_SVC_RATINGDOG","CN","M","RatingDogサービス部門購買担当者景気指数(PMI)","",""
+"PMI_MFG_RATINGDOG","CN","M","RatingDog製造業購買担当者景気指数(PMI)","",""
 "IPI_YOY","CN","M","鉱工業生産(前年同月比)","","％"
 "RETAIL_YOY","CN","M","小売売上高(前年同月比)","","％"
 "CPI_YOY","CN","M","消費者物価指数(CPI)(前年同月比)","","％"

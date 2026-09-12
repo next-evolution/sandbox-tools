@@ -3,6 +3,10 @@
 `data/economic_indicator-all.csv` の `code` 列（`name` 列から人手で採番した英語コード）の命名パターンをまとめる。
 新しい指標行を追加する際はこのルールに従う。
 
+`fx_economic_indicator` テーブルは `code` + `country_code` の複合主キー（同一 `code` でも国ごとに別レコード）。
+同じ指標本体でも発表元が異なる場合（例: 中国PMIの `PMI_MFG` 政府発表 と `PMI_MFG_RATINGDOG` 民間発表）は
+`code` 自体を分けて別レコードとして登録する。
+
 ---
 
 ## 構成要素
