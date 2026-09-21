@@ -27,6 +27,7 @@ MySQL / Redis の Docker Compose 環境と、Bruno API テストコレクショ�
 | Docker Compose 環境・テーブル一覧・環境変数 | [docs/docker.md](docs/docker.md) |
 | Bruno テストコレクション詳細・実行方法 | [bruno/README.md](bruno/README.md) |
 | Bruno 実装メモ（動作確認前の懸念事項） | [bruno/MEMO.md](bruno/MEMO.md) |
+| 横断仕様（認証・API設計・環境変数など。必要時のみ参照） | [../documents/index.md](../documents/index.md) |
 
 ### 利用可能なカスタムコマンド
 

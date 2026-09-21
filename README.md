@@ -12,6 +12,10 @@ sandbox プロジェクトのローカルインフラ・API テストツール�
 
 ## クイックスタート
 
+### 0. 前提条件（Claude Code利用時）
+
+`$SANDBOX_HOME` 直下に `documents`（横断仕様ドキュメントフォルダ、Google Driveへのシンボリックリンク）が必要です。`CLAUDE.md` から参照する横断仕様（`../documents/...`）の解決に使用されます。
+
 ### 1. Docker 起動
 
 ```bash
