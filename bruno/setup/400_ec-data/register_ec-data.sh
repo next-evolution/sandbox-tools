@@ -78,7 +78,7 @@ echo "=== ログイン（Sandbox API） ==="
 curl -sf -X POST \
   -H "Authorization: Bearer $ID_TOKEN" \
   -H "Content-Type: application/json" \
-  "${API_BASE}/auth/login" \
+  "${API_BASE}/auth/login/app" \
   -d "{\"email\":\"$EMAIL_ENCODED\"}" > /dev/null
 echo "  ログイン済み"
 echo ""
