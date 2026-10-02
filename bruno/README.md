@@ -29,7 +29,7 @@ JMeter と同等のシナリオを、GUI 操作・CLI の両方で実行でき�
       register_ec-data.sh      ← 経済指標データの一括登録（CLI 用）
   scenarios/                   ← 機能確認時に繰り返し実行するもの
     login/
-      step01〜03.bru           ← ログイン単体確認
+      step01〜05.bru           ← ログイン単体確認（Web/App 双方のエンドポイントを確認）
       login.sh                 ← ログイン確認用ラッパー
 ```
 
@@ -87,7 +87,7 @@ cp environments/local.bru.example environments/local.bru
 
 | ファイル                  | 用途             | 状態 |
 | ------------------------- | ---------------- | ---- |
-| `scenarios/login/`        | ログイン単体確認 | ✅   |
+| `scenarios/login/`        | ログイン単体確認（Web/App 双方のログイン・認証方式を確認） | ✅   |
 
 ---
 
@@ -166,7 +166,7 @@ cd tools/bruno
 ```
 [Cognito]  Cognito ログイン（curl）← --from-step に関わらず常に実行
 
-[Step02]   Sandbox API ログイン                POST:/api/v1/auth/login
+[Step02]   Sandbox API ログイン                POST:/api/v1/auth/login/app
 [Step03]   シンボル登録                        POST:/api/v1/fx/symbol             ← symbol.csv をループ
 [Step04]   国登録                              POST:/api/v1/fx/country            ← country.csv をループ
 [Step05]   サマータイム登録                    POST:/api/v1/fx/summer-time        ← summer_time.csv をループ
@@ -281,7 +281,10 @@ Bruno は負荷テストには対応しない。参照系の負荷テストは J
 
 ### 1. ログイン
 
-`POST:/api/v1/auth/login`
+```
+POST:/api/v1/auth/login/web
+POST:/api/v1/auth/login/app
+```
 
 ### 2. 登録系
 

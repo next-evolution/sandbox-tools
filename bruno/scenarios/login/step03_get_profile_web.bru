@@ -1,0 +1,18 @@
+meta {
+  name: Step03 プロフィール取得 Web・Cookie認証確認 (GET /api/v1/user)
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/user
+  body: none
+  auth: none
+}
+
+// Authorizationヘッダーを付けず、Step02(login/web)がSet-CookieしたsandboxJwtだけで
+// 認証できることを確認する（JwtMiddleware.resolveToken()のCookieフォールバック確認）
+assert {
+  res.status: eq 200
+  res.body.returnCode: eq 0
+}

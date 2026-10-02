@@ -1,11 +1,11 @@
 meta {
-  name: Step10 Sandbox API 再ログイン（returnCode:0 Ok 期待）
+  name: Step02 Sandbox API ログイン Web (POST /api/v1/auth/login/web)
   type: http
-  seq: 10
+  seq: 2
 }
 
 post {
-  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/auth/login/app
+  url: {{apiScheme}}://{{apiHost}}:{{apiPort}}{{apiRoot}}/auth/login/web
   body: json
   auth: none
 }

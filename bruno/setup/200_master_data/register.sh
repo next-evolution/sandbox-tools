@@ -21,7 +21,7 @@
 #   ./setup/200_master_data/register.sh [--from-step N]
 #
 # --from-step N: ステップ N から再開する（省略時は 2 から全て実行）
-#   Step02: Sandbox API ログイン                           POST:/api/v1/auth/login
+#   Step02: Sandbox API ログイン                           POST:/api/v1/auth/login/app
 #   Step03: シンボル登録                                   POST:/api/v1/fx/symbol
 #   Step04: 国登録                                         POST:/api/v1/fx/country
 #   Step05: サマータイム登録                               POST:/api/v1/fx/summer-time
